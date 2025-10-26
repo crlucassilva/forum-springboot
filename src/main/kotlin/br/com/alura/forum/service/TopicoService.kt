@@ -27,6 +27,12 @@ class TopicoService(
         return topicoViewMapper.map(topico)
     }
 
+    fun obterTopico(id: Long): Topico {
+        return topicos.stream().filter { t ->
+            t.id == id
+        }.findFirst().get()
+    }
+
     fun cadastrar(form: TopicoForm) {
         val topico = topicoFormMapper.map(form)
         topico.id = topicos.size.toLong() + 1
