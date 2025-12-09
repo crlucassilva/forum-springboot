@@ -3,6 +3,7 @@ package br.com.alura.forum.service
 import br.com.alura.forum.dto.AtualizacaoRespostaForm
 import br.com.alura.forum.dto.RespostaForm
 import br.com.alura.forum.dto.RespostaView
+import br.com.alura.forum.exception.NotFoundException
 import br.com.alura.forum.mapper.RespostaFormMapper
 import br.com.alura.forum.mapper.RespostaViewMapper
 import br.com.alura.forum.model.Resposta
@@ -14,7 +15,8 @@ class RespostaService(
     private var respostas: List<Resposta>,
     private val topicoService: TopicoService,
     private val respostaViewMapper: RespostaViewMapper,
-    private val respostaFormMapper: RespostaFormMapper) {
+    private val respostaFormMapper: RespostaFormMapper,
+    private val notFoundMessage: String = "Resposta não encontrada!") {
 
     fun listar(idTopico: Long): List<RespostaView> {
         return respostas.stream().map { r ->
@@ -33,7 +35,7 @@ class RespostaService(
     fun atualizar(form: AtualizacaoRespostaForm): RespostaView {
         val resposta = respostas.stream().filter { r ->
             r.id == form.id
-        }.findFirst().get()
+        }.findFirst().orElseThrow{NotFoundException(notFoundMessage)}
         val respostaAtualizada = Resposta(
             id = form.id,
             mensagem = form.mensagem,
@@ -49,7 +51,7 @@ class RespostaService(
     fun deletar(id: Long) {
         val resposta = respostas.stream().filter { r ->
             r.id == id
-        }.findFirst().get()
+        }.findFirst().orElseThrow{ NotFoundException(notFoundMessage) }
         respostas = respostas.minus(resposta)
     }
 }
