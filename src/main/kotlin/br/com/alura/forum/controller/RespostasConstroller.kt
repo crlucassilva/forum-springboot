@@ -7,6 +7,7 @@ import br.com.alura.forum.service.RespostaService
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.util.UriComponentsBuilder
 
@@ -15,6 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder
 class RespostasConstroller(private val service: RespostaService) {
 
     @PostMapping
+    @Transactional
     fun cadastrar(
         @PathVariable topicoId:Long,
         @RequestBody @Valid form: RespostaForm,
@@ -30,6 +32,7 @@ class RespostasConstroller(private val service: RespostaService) {
     }
 
     @PutMapping
+    @Transactional
     fun atualizar(@RequestBody @Valid form: AtualizacaoRespostaForm): ResponseEntity<RespostaView> {
         val respostaView = service.atualizar(form)
         return ResponseEntity.ok(respostaView)
@@ -37,6 +40,7 @@ class RespostasConstroller(private val service: RespostaService) {
 
     @DeleteMapping("/{respostaId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Transactional
     fun deletar(@PathVariable respostaId: Long) {
         service.deletar(respostaId)
     }
