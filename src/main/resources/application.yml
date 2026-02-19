@@ -5,7 +5,6 @@ spring:
     username: developer
     password: 204060
   jpa:
-    database-platform: org.hibernate.dialect.MySQL8Dialect
     properties:
       hibernate:
         show_sql: true
