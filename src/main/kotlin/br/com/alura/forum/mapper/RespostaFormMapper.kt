@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component
 class RespostaFormMapper(
     val usuarioService: UsuarioService,
     val topicoService: TopicoService
-): Mapper<RespostaForm, Resposta> {
-    override fun map(t: RespostaForm): Resposta {
+) {
+   fun map(t: RespostaForm, idTopico: Long): Resposta {
         return Resposta(
             mensagem = t.mensagem,
             autor = usuarioService.buscarPorId(t.idAutor),
-            topico = topicoService.obterTopico(t.idTopico),
+            topico = topicoService.obterTopico(idTopico),
             solucao = t.solucao)
     }
 }

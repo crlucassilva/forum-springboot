@@ -7,25 +7,28 @@ import br.com.alura.forum.exception.NotFoundException
 import br.com.alura.forum.mapper.RespostaFormMapper
 import br.com.alura.forum.mapper.RespostaViewMapper
 import br.com.alura.forum.repository.RespostaRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
-import java.util.stream.Collectors
 
 @Service
 class RespostaService(
     private val repository: RespostaRepository,
-    private val topicoService: TopicoService,
     private val respostaViewMapper: RespostaViewMapper,
     private val respostaFormMapper: RespostaFormMapper,
     private val notFoundMessage: String = "Resposta não encontrada!") {
 
-    fun listar(idTopico: Long): List<RespostaView> {
-        return repository.findAll().stream().map { r ->
+    fun listar(
+        idTopico: Long,
+        paginacao: Pageable
+    ): Page<RespostaView> {
+        return repository.findByTopicoId(idTopico, paginacao).map { r ->
             respostaViewMapper.map(r)
-        }.collect(Collectors.toList())
+        }
     }
 
     fun cadastrar(idTopico: Long, form: RespostaForm): RespostaView {
-        val resposta = respostaFormMapper.map(form)
+        val resposta = respostaFormMapper.map(form, idTopico)
         repository.save(resposta)
         return RespostaViewMapper().map(resposta)
     }

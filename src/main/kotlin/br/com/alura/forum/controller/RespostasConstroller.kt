@@ -5,6 +5,8 @@ import br.com.alura.forum.dto.RespostaForm
 import br.com.alura.forum.dto.RespostaView
 import br.com.alura.forum.service.RespostaService
 import jakarta.validation.Valid
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.transaction.annotation.Transactional
@@ -27,8 +29,11 @@ class RespostasConstroller(private val service: RespostaService) {
     }
 
     @GetMapping
-    fun listar(@PathVariable topicoId: Long): List<RespostaView> {
-        return service.listar(topicoId)
+    fun listar(
+        @PathVariable topicoId: Long,
+        paginacao: Pageable
+    ): Page<RespostaView> {
+        return service.listar(topicoId, paginacao)
     }
 
     @PutMapping

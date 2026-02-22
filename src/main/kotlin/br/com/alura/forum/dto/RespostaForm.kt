@@ -6,6 +6,5 @@ data class RespostaForm (
     @field:NotNull
     val mensagem: String,
     val idAutor: Long,
-    val idTopico: Long,
     val solucao: Boolean
 )
