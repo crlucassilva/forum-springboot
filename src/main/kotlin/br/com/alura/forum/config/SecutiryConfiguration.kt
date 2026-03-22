@@ -2,6 +2,7 @@ package br.com.alura.forum.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -26,7 +27,9 @@ class SecutiryConfiguration(
                 it.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             }
             .authorizeHttpRequests {
-                it.anyRequest().authenticated()
+                it
+                    .requestMatchers("/topicos").hasAuthority("LEITURA_ESCRITA")
+                    .anyRequest().authenticated()
             }
             .formLogin { it.disable() }
             .httpBasic {}
