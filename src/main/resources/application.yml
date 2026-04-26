@@ -9,3 +9,5 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+jwt:
+  secret: secreto-super-seguro-com-mais-de-32-caracteres
