@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://host.docker.internal:3306/forum
+    username: developer
+    password: 204060
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+jwt:
+  secret: secreto-super-seguro-com-mais-de-32-caracteres
