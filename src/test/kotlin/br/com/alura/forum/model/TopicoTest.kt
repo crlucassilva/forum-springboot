@@ -1,0 +1,11 @@
+package br.com.alura.forum.model
+
+object TopicoTest {
+    fun build() = Topico(
+        id = 1,
+        titulo = "",
+        mensagem = "",
+        curso = CursoTest.build(),
+        autor = UsuarioTest.build()
+    )
+}

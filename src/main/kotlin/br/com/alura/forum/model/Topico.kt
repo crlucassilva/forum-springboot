@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.ManyToOne
 import jakarta.persistence.OneToMany
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Entity
@@ -22,7 +23,8 @@ data class Topico (
     @ManyToOne
     val autor: Usuario,
     @Enumerated(EnumType.STRING)
-    val status: StatusTopico = StatusTopico.NAO_RESPONDIDO,
+    val status: StatusTopico = StatusTopico.NAO_RESPONDIDA,
     @OneToMany(mappedBy = "topico")
-    val respostas: List<Resposta> = ArrayList()
+    val respostas: List<Resposta> = ArrayList(),
+    var dataAlteracao: LocalDate? = null
 )
